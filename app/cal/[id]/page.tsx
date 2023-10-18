@@ -38,7 +38,7 @@ async function getCalendar(id: string): Promise<GetCalendarResp> {
 export default async function Page({ params }: { params: { id: string } }) {
   const resp = await getCalendar(params.id);
 
-  return (<div className="bg-white text-black">
+  return <div className="bg-white text-black">
     <div>
       <ul>
         <li>달력 이름: {resp.calendar.name}</li>
@@ -57,15 +57,19 @@ export default async function Page({ params }: { params: { id: string } }) {
         </thead>
         <tbody>
           {resp.calendar.years.map(year => (
-            <tr key={year.yearnum}>
-              <td className="text-xs">{year.yearnum}</td>
-              {year.weeks.map(week => <Week week={week} key={week.weeknum} />)}
-            </tr>
+            <Year year={year} key={year.yearnum} />
           ))}
         </tbody>
       </table>
     </div>
-  </div>);
+  </div>;
+}
+
+function Year({ year }: { year: Year }) {
+  return <tr>
+    <td className="text-xs">{year.yearnum}</td>
+    {year.weeks.map(week => <Week week={week} key={week.weeknum} />)}
+  </tr>
 }
 
 function Week({ week }: { week: Week }) {
