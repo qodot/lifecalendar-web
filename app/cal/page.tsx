@@ -1,16 +1,4 @@
-type GetCalendarListResp = {
-  calendars: Calendar[];
-};
-
-async function getCalendarList(): Promise<GetCalendarListResp> {
-  const url = `${process.env.API_HOST}/api/v1/calendar`;
-  const resp = await fetch(url);
-  if (!resp.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return await resp.json();
-}
+import { getCalendarList } from "@/src/data/api";
 
 export default async function Page() {
   const resp = await getCalendarList();
