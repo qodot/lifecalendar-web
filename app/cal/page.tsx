@@ -1,5 +1,6 @@
 import CalendarFormButton from "@/src/component/CalendarFormButton";
 import { getCalendarList } from "@/src/data/api";
+import Link from "next/link";
 
 export default async function Page() {
   const resp = await getCalendarList();
@@ -47,7 +48,9 @@ function Rows({ calendars }: { calendars: Calendar[] }) {
       <td>{calendar.birthday}</td>
       <td>{calendar.lifespan}</td>
       <th>
-        <button className="btn btn-sm">상세 보기</button>
+        <Link href={`/cal/${calendar.id}`}>
+          <button className="btn btn-sm">상세 보기</button>
+        </Link>
       </th>
     </tr>
   ));
