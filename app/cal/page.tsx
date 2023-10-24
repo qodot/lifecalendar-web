@@ -1,3 +1,4 @@
+import CreateCalendarButton from "@/src/component/CreateCalendarButton";
 import { getCalendarList } from "@/src/data/api";
 
 export default async function Page() {
@@ -8,7 +9,7 @@ export default async function Page() {
       <h1>캘린더 목록</h1>
 
       <div className="flex justify-end">
-        <button className="btn btn-primary">새 캘린더 생성</button>
+        <CreateCalendarButton />
       </div>
 
       <table className="table">
