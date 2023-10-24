@@ -5,7 +5,7 @@ export default async function Page() {
   const resp = await getCalendarList();
 
   return (
-    <main className="flex flex-col py-10 px-32">
+    <>
       <h1>캘린더 목록</h1>
 
       <div className="flex justify-end">
@@ -31,7 +31,7 @@ export default async function Page() {
           <Rows calendars={resp.calendars} />
         </tbody>
       </table>
-    </main>
+    </>
   );
 }
 
