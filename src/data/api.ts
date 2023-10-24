@@ -37,3 +37,25 @@ export async function createCalendar(req: CreateCalendarReq) {
     throw new Error(`fail to call api ${url}`);
   }
 }
+
+type GetCalendarResp = {
+  calendar: Calendar;
+};
+
+export async function getCalendar(id: string): Promise<GetCalendarResp> {
+  const url = `${API_HOST}/api/v1/calendar/${id}`;
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+
+  return await resp.json();
+}
+
+export async function updateCalendar(id: string, req: CreateCalendarReq) {
+  const url = `${API_HOST}/api/v1/calendar/${id}/update`;
+  const resp = await POST(url, req);
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+}
