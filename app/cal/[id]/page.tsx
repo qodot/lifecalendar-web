@@ -57,9 +57,13 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
 
           <div className="stat">
-            <div className="stat-title">올해(2023년) 진행률</div>
-            <div className="stat-value">82%</div>
-            <div className="stat-desc">12주 남았어요!</div>
+            <div className="stat-title">
+              올해({new Date().getFullYear()}년) 진행률
+            </div>
+            <div className="stat-value">{calendar.this_year_percentage}%</div>
+            <div className="stat-desc">
+              {calendar.this_year_future_week_count}주 남았어요!
+            </div>
           </div>
         </div>
 

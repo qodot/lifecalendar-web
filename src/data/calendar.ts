@@ -4,6 +4,9 @@ type Calendar = {
   birthday: string;
   lifespan: number;
 
+  this_year_percentage: number;
+  this_year_past_week_count: number;
+  this_year_future_week_count: number;
   deathday: string;
   age: number;
   total_percentage: number;
