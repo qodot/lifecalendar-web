@@ -1,5 +1,6 @@
 import CalendarFormButton from "@/src/component/CalendarFormButton";
 import { getCalendarList } from "@/src/data/api";
+import { formatNumberComma } from "@/src/util/format";
 import Link from "next/link";
 
 export default async function Page() {
@@ -60,7 +61,7 @@ function Rows({ calendars }: { calendars: Calendar[] }) {
           ></progress>
         </div>
       </td>
-      <td>{calendar.future_week_count}주</td>
+      <td>{formatNumberComma(calendar.future_week_count)}주</td>
       <th>
         <Link href={`/cal/${calendar.id}`}>
           <button className="btn btn-sm">상세 보기</button>
