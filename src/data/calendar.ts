@@ -4,6 +4,12 @@ type Calendar = {
   birthday: string;
   lifespan: number;
 
+  deathday: string;
+  age: number;
+  total_percentage: number;
+  past_week_count: number;
+  future_week_count: number;
+
   years: Year[];
 };
 
