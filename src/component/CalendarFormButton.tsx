@@ -6,10 +6,10 @@ import { createCalendar, updateCalendar } from "../data/api";
 type CalendarFormButtonProps =
   | {
       isCreate: true;
-      id: undefined;
-      name: undefined;
-      birthday: undefined;
-      lifespan: undefined;
+      id?: undefined;
+      name?: undefined;
+      birthday?: undefined;
+      lifespan?: undefined;
     }
   | {
       isCreate: false;
