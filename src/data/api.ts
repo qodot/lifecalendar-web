@@ -16,7 +16,7 @@ type GetCalendarListResp = {
 
 export async function getCalendarList(): Promise<GetCalendarListResp> {
   const url = `${API_HOST}/api/v1/calendar`;
-  const resp = await fetch(url);
+  const resp = await fetch(url, { cache: "no-cache" });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -44,7 +44,7 @@ type GetCalendarResp = {
 
 export async function getCalendar(id: string): Promise<GetCalendarResp> {
   const url = `${API_HOST}/api/v1/calendar/${id}`;
-  const resp = await fetch(url);
+  const resp = await fetch(url, { cache: "no-cache" });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
