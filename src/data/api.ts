@@ -1,22 +1,65 @@
-const API_HOST = process.env.API_HOST || process.env.NEXT_PUBLIC_API_HOST;
+import { GET, POST } from "./http";
 
-async function POST(url: string, params: any) {
-  return await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  });
+// auth API
+
+type SignUpReq = {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
+
+type SignUpResp = {
+  access_token: string;
+};
+
+export async function signUp(req: SignUpReq): Promise<SignUpResp> {
+  const url = `/api/v1/auth/sign-up`;
+  const resp = await POST({ url, params: req });
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+
+  return await resp.json();
 }
+
+type SignWithPasswordReq = {
+  email: string;
+  password: string;
+};
+
+type SignWithPasswordResp = {
+  access_token: string;
+};
+
+export async function signInPassword(
+  req: SignWithPasswordReq
+): Promise<SignWithPasswordResp> {
+  const url = `/api/v1/auth/sign-in-password`;
+  const resp = await POST({ url, params: req });
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+
+  return await resp.json();
+}
+
+export async function signOut(token: string) {
+  const url = `/api/v1/auth/sign-out`;
+  const resp = await POST({ url, token });
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+}
+
+// calendar API
 
 type GetCalendarListResp = {
   calendars: Calendar[];
 };
 
 export async function getCalendarList(): Promise<GetCalendarListResp> {
-  const url = `${API_HOST}/api/v1/calendar`;
-  const resp = await fetch(url, { cache: "no-cache" });
+  const url = `/api/v1/calendar`;
+  const resp = await GET({ url, headers: { cache: "no-cache" } });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -31,8 +74,8 @@ type CreateCalendarReq = {
 };
 
 export async function createCalendar(req: CreateCalendarReq) {
-  const url = `${API_HOST}/api/v1/calendar/create`;
-  const resp = await POST(url, req);
+  const url = `/api/v1/calendar/create`;
+  const resp = await POST({ url, params: req });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -43,8 +86,8 @@ type GetCalendarResp = {
 };
 
 export async function getCalendar(id: string): Promise<GetCalendarResp> {
-  const url = `${API_HOST}/api/v1/calendar/${id}`;
-  const resp = await fetch(url, { cache: "no-cache" });
+  const url = `/api/v1/calendar/${id}`;
+  const resp = await GET({ url, headers: { cache: "no-cache" } });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -53,8 +96,8 @@ export async function getCalendar(id: string): Promise<GetCalendarResp> {
 }
 
 export async function updateCalendar(id: string, req: CreateCalendarReq) {
-  const url = `${API_HOST}/api/v1/calendar/${id}/update`;
-  const resp = await POST(url, req);
+  const url = `/api/v1/calendar/${id}/update`;
+  const resp = await POST({ url, params: req });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
