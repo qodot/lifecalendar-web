@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import RecoilRootProvider from "./RecoilRootProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className={`${inter.className} prose max-w-none`}>{children}</body>
+      <body className={`${inter.className} prose max-w-none`}>
+        <RecoilRootProvider>{children}</RecoilRootProvider>
+      </body>
     </html>
   );
 }
