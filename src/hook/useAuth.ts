@@ -3,6 +3,7 @@
 import { useRecoilState } from "recoil";
 import { signInPassword, signOut as signOutAPI } from "@/src/data/api";
 import { accessTokenState } from "@/src/recoil/auth";
+import { useEffect, useState } from "react";
 
 type UserAuthResp = {
   accessToken: string | null;
@@ -12,7 +13,12 @@ type UserAuthResp = {
 };
 
 export default function useAuth(): UserAuthResp {
+  const [isInit, setIsInit] = useState(true); // prevent hydration error ref: https://github.com/polemius/recoil-persist#server-side-rendering
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+
+  useEffect(() => {
+    setIsInit(false);
+  }, []);
 
   async function signIn(email: string, password: string) {
     const resp = await signInPassword({ email, password });
@@ -29,8 +35,8 @@ export default function useAuth(): UserAuthResp {
   }
 
   return {
-    accessToken,
-    isAuthenticated: accessToken !== null,
+    accessToken: isInit ? null : accessToken,
+    isAuthenticated: isInit ? false : accessToken !== null,
     signIn,
     signOut,
   };
