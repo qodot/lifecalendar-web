@@ -69,15 +69,15 @@ export async function getCalendarList(
   return await resp.json();
 }
 
-type CreateCalendarReq = {
+export type CreateCalendarReq = {
   name: string;
   birthday: string;
   lifespan: number;
 };
 
-export async function createCalendar(req: CreateCalendarReq) {
+export async function createCalendar(req: CreateCalendarReq, token: string) {
   const url = `/api/v1/calendar/create`;
-  const resp = await POST({ url, params: req });
+  const resp = await POST({ url, params: req, token });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -100,9 +100,13 @@ export async function getCalendar(
   return await resp.json();
 }
 
-export async function updateCalendar(id: string, req: CreateCalendarReq) {
+export async function updateCalendar(
+  id: string,
+  req: CreateCalendarReq,
+  token: string
+) {
   const url = `/api/v1/calendar/${id}/update`;
-  const resp = await POST({ url, params: req });
+  const resp = await POST({ url, params: req, token });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }

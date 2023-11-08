@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCalendar } from "@/src/data/api";
+import { CreateCalendarReq, getCalendar, updateCalendar } from "@/src/data/api";
 import useAuth from "./useAuth";
 
 type MyCalendarResp = {
   myCalendar: Calendar | null;
+  updateMyCalendar: (req: CreateCalendarReq) => Promise<void>;
 };
 
 export default function useMyCalendar(id: string): MyCalendarResp {
@@ -13,13 +14,19 @@ export default function useMyCalendar(id: string): MyCalendarResp {
   const [calendar, setCalendar] = useState<Calendar | null>(null);
 
   useEffect(() => {
-    if (accessToken === null) return;
+    if (accessToken === null) throw new Error("access token is null");
     getCalendar(id, accessToken).then((resp) => {
       setCalendar(resp.calendar);
     });
   }, [accessToken]);
 
+  async function updateMyCalendar(req: CreateCalendarReq) {
+    if (accessToken === null) throw new Error("access token is null");
+    await updateCalendar(id, req, accessToken);
+  }
+
   return {
     myCalendar: calendar,
+    updateMyCalendar,
   };
 }
