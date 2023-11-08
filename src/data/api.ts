@@ -57,9 +57,11 @@ type GetCalendarListResp = {
   calendars: Calendar[];
 };
 
-export async function getCalendarList(): Promise<GetCalendarListResp> {
+export async function getCalendarList(
+  token: string
+): Promise<GetCalendarListResp> {
   const url = `/api/v1/calendar`;
-  const resp = await GET({ url, headers: { cache: "no-cache" } });
+  const resp = await GET({ url, headers: { cache: "no-cache" }, token });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
