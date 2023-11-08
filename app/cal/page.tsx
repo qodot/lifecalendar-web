@@ -1,12 +1,7 @@
 import CalendarFormButton from "@/src/component/CalendarFormButton";
-import { getCalendarList } from "@/src/data/api";
-import { formatNumberComma } from "@/src/util/format";
-import Link from "next/link";
+import MyCalendarList from "@/src/component/cal/MyCalendarList";
 
 export default async function Page() {
-  const resp = await getCalendarList();
-  const calendar = resp.calendars[0];
-
   return (
     <>
       <h1>캘린더 목록</h1>
@@ -17,68 +12,17 @@ export default async function Page() {
             <div className="stat-title">
               올해({new Date().getFullYear()}년) 진행률
             </div>
-            <div className="stat-value">{calendar.this_year_percentage}%</div>
+            {/* <div className="stat-value">{calendar.this_year_percentage}%</div>
             <div className="stat-desc">
               {calendar.this_year_future_week_count}주 남았어요!
-            </div>
+            </div> */}
           </div>
         </div>
 
         <CalendarFormButton isCreate />
       </div>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <th>캘린더 이름</th>
-            <th>생일</th>
-            <th>예상 수명</th>
-            <th>지나온 삶</th>
-            <th>남은 주</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <Rows calendars={resp.calendars} />
-        </tbody>
-      </table>
+      <MyCalendarList />
     </>
   );
-}
-
-function Rows({ calendars }: { calendars: Calendar[] }) {
-  return calendars.map((calendar) => (
-    <tr key={calendar.id} className="hover">
-      <th>
-        <label>
-          <input type="checkbox" className="checkbox" />
-        </label>
-      </th>
-      <td>{calendar.name}</td>
-      <td>{calendar.birthday}</td>
-      <td>{calendar.lifespan}세</td>
-      <td>
-        <div className="flex flex-row items-center w-full">
-          {calendar.total_percentage}%
-          <progress
-            className="ml-3 progress progress-primary w-44"
-            value={calendar.total_percentage.toString()}
-            max="100"
-          ></progress>
-        </div>
-      </td>
-      <td>{formatNumberComma(calendar.future_week_count)}주</td>
-      <th>
-        <Link href={`/cal/${calendar.id}`}>
-          <button className="btn btn-sm">상세 보기</button>
-        </Link>
-      </th>
-    </tr>
-  ));
 }
