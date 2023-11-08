@@ -1,31 +1,22 @@
 "use client";
 
 import { FormEvent } from "react";
-import { createCalendar, updateCalendar } from "../data/api";
+import { CreateCalendarReq } from "../data/api";
 
 type CalendarFormButtonProps =
   | {
       isCreate: true;
-      id?: undefined;
-      name?: undefined;
-      birthday?: undefined;
-      lifespan?: undefined;
+      createCalendar: (req: CreateCalendarReq) => Promise<void>;
     }
   | {
       isCreate: false;
-      id: string;
+      updateCalendar: (req: CreateCalendarReq) => Promise<void>;
       name: string;
       birthday: string;
       lifespan: number;
     };
 
-export default function CalendarFormButton({
-  isCreate,
-  id,
-  name,
-  birthday,
-  lifespan,
-}: CalendarFormButtonProps) {
+export default function CalendarFormButton(props: CalendarFormButtonProps) {
   async function handleCreateClick() {
     // @ts-ignore
     document.getElementById("calendar-form-modal").showModal();
@@ -38,18 +29,20 @@ export default function CalendarFormButton({
       birthday: event.currentTarget.birthday.value,
       lifespan: parseInt(event.currentTarget.lifespan.value),
     };
-    isCreate ? await createCalendar(params) : await updateCalendar(id, params);
+    props.isCreate
+      ? props.createCalendar(params)
+      : props.updateCalendar(params);
   }
 
   return (
     <>
       <button className="btn btn-primary" onClick={handleCreateClick}>
-        {isCreate ? "새 캘린더 만들기" : "캘린더 수정하기"}
+        {props.isCreate ? "새 캘린더 만들기" : "캘린더 수정하기"}
       </button>
 
       <dialog id="calendar-form-modal" className="modal">
         <div className="modal-box">
-          <h3>{isCreate ? "새 캘린더 만들기" : "캘린더 수정하기"}</h3>
+          <h3>{props.isCreate ? "새 캘린더 만들기" : "캘린더 수정하기"}</h3>
 
           <form className="flex flex-col gap-1" onSubmit={handleSubmit}>
             <div className="form-control w-full">
@@ -60,7 +53,7 @@ export default function CalendarFormButton({
                 type="text"
                 name="calname"
                 placeholder="캘린더 이름"
-                defaultValue={name}
+                defaultValue={props.isCreate ? "" : props.name}
                 className="input input-bordered w-full"
               />
             </div>
@@ -72,7 +65,9 @@ export default function CalendarFormButton({
               <input
                 type="date"
                 name="birthday"
-                defaultValue={birthday}
+                defaultValue={
+                  props.isCreate ? new Date().toISOString() : props.birthday
+                }
                 className="input input-bordered w-full"
               />
             </div>
@@ -85,14 +80,14 @@ export default function CalendarFormButton({
                 type="number"
                 name="lifespan"
                 placeholder="예상 수명"
-                defaultValue={lifespan}
+                defaultValue={props.isCreate ? 80 : props.lifespan}
                 className="input input-bordered w-full"
               />
             </div>
 
             <div className="py-3">
               <button className="btn btn-primary" type="submit">
-                {isCreate ? "만들기" : "수정하기"}
+                {props.isCreate ? "만들기" : "수정하기"}
               </button>
             </div>
           </form>
