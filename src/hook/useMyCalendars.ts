@@ -18,7 +18,11 @@ export default function useMyCalendars(): MyCalendarsResp {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
 
   useEffect(() => {
-    if (accessToken === null) return;
+    if (accessToken === null) {
+      setCalendars([]);
+      return;
+    }
+
     getCalendarList(accessToken).then((resp) => {
       setCalendars(resp.calendars);
     });

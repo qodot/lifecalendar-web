@@ -14,7 +14,11 @@ export default function useMyCalendar(id: string): MyCalendarResp {
   const [calendar, setCalendar] = useState<Calendar | null>(null);
 
   useEffect(() => {
-    if (accessToken === null) throw new Error("access token is null");
+    if (accessToken === null) {
+      setCalendar(null);
+      return;
+    }
+
     getCalendar(id, accessToken).then((resp) => {
       setCalendar(resp.calendar);
     });
