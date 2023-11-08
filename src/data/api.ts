@@ -87,9 +87,12 @@ type GetCalendarResp = {
   calendar: Calendar;
 };
 
-export async function getCalendar(id: string): Promise<GetCalendarResp> {
+export async function getCalendar(
+  id: string,
+  token: string
+): Promise<GetCalendarResp> {
   const url = `/api/v1/calendar/${id}`;
-  const resp = await GET({ url, headers: { cache: "no-cache" } });
+  const resp = await GET({ url, headers: { cache: "no-cache" }, token });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
