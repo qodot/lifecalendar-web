@@ -1,25 +1,35 @@
-import { FormEvent } from "react";
 import useAuth from "@/src/hook/useAuth";
+import { FormEvent } from "react";
 
 export default function DefaultButtonGroup() {
-  const { signIn } = useAuth();
+  const { signUp, signIn } = useAuth();
 
   async function handleClickSignUp() {
     // @ts-ignore
     document.getElementById("sign-up-form-modal").showModal();
   }
+
   async function handleClickSignIn() {
     // @ts-ignore
     document.getElementById("sign-in-form-modal").showModal();
   }
+
   async function handleSubmitSignUp(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    await signUp(
+      event.currentTarget.email.value,
+      event.currentTarget.password.value,
+      event.currentTarget.passwordConfirm.value,
+    );
+    // @ts-ignore
+    document.getElementById("sign-in-form-modal").close();
   }
+
   async function handleSubmitSignIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await signIn(
       event.currentTarget.email.value,
-      event.currentTarget.password.value
+      event.currentTarget.password.value,
     );
     // @ts-ignore
     document.getElementById("sign-in-form-modal").close();
