@@ -14,7 +14,14 @@ type SignUpResp = {
 
 export async function signUp(req: SignUpReq): Promise<SignUpResp> {
   const url = `/api/v1/auth/sign-up`;
-  const resp = await POST({ url, params: req });
+  const resp = await POST({
+    url,
+    params: {
+      email: req.email,
+      password: req.password,
+      password_confirm: req.passwordConfirm,
+    },
+  });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -32,7 +39,7 @@ type SignWithPasswordResp = {
 };
 
 export async function signInPassword(
-  req: SignWithPasswordReq
+  req: SignWithPasswordReq,
 ): Promise<SignWithPasswordResp> {
   const url = `/api/v1/auth/sign-in-password`;
   const resp = await POST({ url, params: req });
@@ -58,7 +65,7 @@ type GetCalendarListResp = {
 };
 
 export async function getCalendarList(
-  token: string
+  token: string,
 ): Promise<GetCalendarListResp> {
   const url = `/api/v1/calendar`;
   const resp = await GET({ url, headers: { cache: "no-cache" }, token });
@@ -89,7 +96,7 @@ type GetCalendarResp = {
 
 export async function getCalendar(
   id: string,
-  token: string
+  token: string,
 ): Promise<GetCalendarResp> {
   const url = `/api/v1/calendar/${id}`;
   const resp = await GET({ url, headers: { cache: "no-cache" }, token });
@@ -103,7 +110,7 @@ export async function getCalendar(
 export async function updateCalendar(
   id: string,
   req: CreateCalendarReq,
-  token: string
+  token: string,
 ) {
   const url = `/api/v1/calendar/${id}/update`;
   const resp = await POST({ url, params: req, token });
