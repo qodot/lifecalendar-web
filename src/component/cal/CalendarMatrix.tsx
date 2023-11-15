@@ -58,7 +58,7 @@ function Week({ week }: { week: Week }) {
     }
   }
 
-  return <div className={`w-5 h-5 rounded-sm ${getColor(week.time_type)}`} />;
+  return <div className={`w-5 h-5 rounded-sm ${getColor(week.timeType)}`} />;
 }
 
 function Row({ children }: { children: React.ReactNode }) {
