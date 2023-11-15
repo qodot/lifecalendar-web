@@ -4,14 +4,14 @@ type Calendar = {
   birthday: string;
   lifespan: number;
 
-  this_year_percentage: number;
-  this_year_past_week_count: number;
-  this_year_future_week_count: number;
+  thisYearPercentage: number;
+  thisYearPastWeekCount: number;
+  thisYearFutureWeekCount: number;
   deathday: string;
   age: number;
-  total_percentage: number;
-  past_week_count: number;
-  future_week_count: number;
+  totalPercentage: number;
+  pastWeekCount: number;
+  futureWeekCount: number;
 
   years: Year[];
 };
@@ -24,7 +24,7 @@ type Year = {
 type Week = {
   yearnum: number;
   weeknum: number;
-  time_type: TimeType;
+  timeType: TimeType;
 };
 
 type TimeType = "before_born" | "past" | "now" | "future" | "after_death";

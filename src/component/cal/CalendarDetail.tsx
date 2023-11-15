@@ -40,11 +40,11 @@ export default function CalendarDetail({
 
           <div className="stat">
             <div className="stat-title">내가 지나온 삶</div>
-            <div className="stat-value">{calendar.total_percentage}%</div>
+            <div className="stat-value">{calendar.totalPercentage}%</div>
             <div className="stat-desc">
               <progress
                 className="progress progress-primary w-56"
-                value={calendar.total_percentage.toString()}
+                value={calendar.totalPercentage.toString()}
                 max="100"
               ></progress>
             </div>
@@ -53,10 +53,10 @@ export default function CalendarDetail({
           <div className="stat">
             <div className="stat-title">나에게 남은 주</div>
             <div className="stat-value">
-              {formatNumberComma(calendar.future_week_count)}주
+              {formatNumberComma(calendar.futureWeekCount)}주
             </div>
             <div className="stat-desc">
-              지나온 주 {formatNumberComma(calendar.past_week_count)}주
+              지나온 주 {formatNumberComma(calendar.pastWeekCount)}주
             </div>
           </div>
 
@@ -64,9 +64,9 @@ export default function CalendarDetail({
             <div className="stat-title">
               올해({new Date().getFullYear()}년) 진행률
             </div>
-            <div className="stat-value">{calendar.this_year_percentage}%</div>
+            <div className="stat-value">{calendar.thisYearPercentage}%</div>
             <div className="stat-desc">
-              {calendar.this_year_future_week_count}주 남았어요!
+              {calendar.thisYearFutureWeekCount}주 남았어요!
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ export default function DefaultButtonGroup() {
       event.currentTarget.passwordConfirm.value,
     );
     // @ts-ignore
-    document.getElementById("sign-in-form-modal").close();
+    document.getElementById("sign-up-form-modal").close();
   }
 
   async function handleSubmitSignIn(event: FormEvent<HTMLFormElement>) {

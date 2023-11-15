@@ -40,15 +40,15 @@ function Rows({ calendars }: { calendars: Calendar[] }) {
       <td>{calendar.lifespan}세</td>
       <td>
         <div className="flex flex-row items-center w-full">
-          {calendar.total_percentage}%
+          {calendar.totalPercentage}%
           <progress
             className="ml-3 progress progress-primary w-44"
-            value={calendar.total_percentage.toString()}
+            value={calendar.totalPercentage.toString()}
             max="100"
           ></progress>
         </div>
       </td>
-      <td>{formatNumberComma(calendar.future_week_count)}주</td>
+      <td>{formatNumberComma(calendar.futureWeekCount)}주</td>
       <th>
         <Link href={`/cal/${calendar.id}`}>
           <button className="btn btn-sm">상세 보기</button>

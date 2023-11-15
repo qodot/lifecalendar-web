@@ -1,3 +1,4 @@
+import { convertKeysSnakeToCamel } from "@/src/util/object";
 import { GET, POST } from "./http";
 
 // auth API
@@ -73,7 +74,10 @@ export async function getCalendarList(
     throw new Error(`fail to call api ${url}`);
   }
 
-  return await resp.json();
+  const calendars: Calendar[] = (await resp.json()).calendars.map(
+    (calendar: any) => convertKeysSnakeToCamel(calendar),
+  );
+  return { calendars };
 }
 
 export type CreateCalendarReq = {
@@ -104,7 +108,10 @@ export async function getCalendar(
     throw new Error(`fail to call api ${url}`);
   }
 
-  return await resp.json();
+  const calendar: Calendar = convertKeysSnakeToCamel(
+    (await resp.json()).calendar,
+  );
+  return { calendar };
 }
 
 export async function updateCalendar(
