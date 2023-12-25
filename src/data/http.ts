@@ -16,16 +16,16 @@ export async function GET({
   url,
   headers,
   params,
-  token,
+  accessToken,
 }: {
   url: string;
   headers?: any;
   params?: any;
-  token?: string;
+  accessToken?: string;
 }) {
   return await fetch(`${API_HOST}${url}`, {
     method: "GET",
-    headers: { ...getDefaultHeader(token), ...(headers ? headers : {}) },
+    headers: { ...getDefaultHeader(accessToken), ...(headers ? headers : {}) },
   });
 }
 
@@ -33,16 +33,16 @@ export async function POST({
   url,
   headers,
   params,
-  token,
+  accessToken,
 }: {
   url: string;
   headers?: any;
   params?: any;
-  token?: string;
+  accessToken?: string;
 }) {
   return await fetch(`${API_HOST}${url}`, {
     method: "POST",
-    headers: { ...getDefaultHeader(token), ...(headers ? headers : {}) },
+    headers: { ...getDefaultHeader(accessToken), ...(headers ? headers : {}) },
     body: params ? JSON.stringify(params) : null,
   });
 }

@@ -40,7 +40,7 @@ type SignWithPasswordResp = {
 };
 
 export async function signInPassword(
-  req: SignWithPasswordReq,
+  req: SignWithPasswordReq
 ): Promise<SignWithPasswordResp> {
   const url = `/api/v1/auth/sign-in-password`;
   const resp = await POST({ url, params: req });
@@ -51,9 +51,9 @@ export async function signInPassword(
   return await resp.json();
 }
 
-export async function signOut(token: string) {
+export async function signOut(accessToken: string) {
   const url = `/api/v1/auth/sign-out`;
-  const resp = await POST({ url, token });
+  const resp = await POST({ url, accessToken });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -66,16 +66,16 @@ type GetCalendarListResp = {
 };
 
 export async function getCalendarList(
-  token: string,
+  accessToken: string
 ): Promise<GetCalendarListResp> {
   const url = `/api/v1/calendar`;
-  const resp = await GET({ url, headers: { cache: "no-cache" }, token });
+  const resp = await GET({ url, headers: { cache: "no-cache" }, accessToken });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
 
   const calendars: Calendar[] = (await resp.json()).calendars.map(
-    (calendar: any) => convertKeysSnakeToCamel(calendar),
+    (calendar: any) => convertKeysSnakeToCamel(calendar)
   );
   return { calendars };
 }
@@ -86,9 +86,12 @@ export type CreateCalendarReq = {
   lifespan: number;
 };
 
-export async function createCalendar(req: CreateCalendarReq, token: string) {
+export async function createCalendar(
+  req: CreateCalendarReq,
+  accessToken: string
+) {
   const url = `/api/v1/calendar/create`;
-  const resp = await POST({ url, params: req, token });
+  const resp = await POST({ url, params: req, accessToken });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
@@ -100,16 +103,16 @@ type GetCalendarResp = {
 
 export async function getCalendar(
   id: string,
-  token: string,
+  accessToken: string
 ): Promise<GetCalendarResp> {
   const url = `/api/v1/calendar/${id}`;
-  const resp = await GET({ url, headers: { cache: "no-cache" }, token });
+  const resp = await GET({ url, headers: { cache: "no-cache" }, accessToken });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
 
   const calendar: Calendar = convertKeysSnakeToCamel(
-    (await resp.json()).calendar,
+    (await resp.json()).calendar
   );
   return { calendar };
 }
@@ -117,10 +120,10 @@ export async function getCalendar(
 export async function updateCalendar(
   id: string,
   req: CreateCalendarReq,
-  token: string,
+  accessToken: string
 ) {
   const url = `/api/v1/calendar/${id}/update`;
-  const resp = await POST({ url, params: req, token });
+  const resp = await POST({ url, params: req, accessToken });
   if (!resp.ok) {
     throw new Error(`fail to call api ${url}`);
   }
