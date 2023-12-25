@@ -5,7 +5,7 @@ import { CreateCalendarReq, getCalendar, updateCalendar } from "@/src/data/api";
 import useAuth from "./useAuth";
 
 type MyCalendarResp = {
-  myCalendar: Calendar | null;
+  calendar: Calendar | null;
   updateMyCalendar: (req: CreateCalendarReq) => Promise<void>;
 };
 
@@ -30,7 +30,7 @@ export default function useMyCalendar(id: string): MyCalendarResp {
   }
 
   return {
-    myCalendar: calendar,
+    calendar,
     updateMyCalendar,
   };
 }
