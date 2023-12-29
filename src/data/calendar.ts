@@ -14,6 +14,7 @@ type Calendar = {
   futureWeekCount: number;
 
   years: Year[];
+  periods: Period[];
 };
 
 type Year = {
@@ -28,3 +29,14 @@ type Week = {
 };
 
 type TimeType = "before_born" | "past" | "now" | "future" | "after_death";
+
+type Period = {
+  id: string;
+  calendarId: string;
+  name: string;
+  startYear: number;
+  startWeek: number;
+  endYear: number;
+  endWeek: number;
+  color: string;
+};

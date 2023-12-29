@@ -128,3 +128,24 @@ export async function updateCalendar(
     throw new Error(`fail to call api ${url}`);
   }
 }
+
+export type CreatePeriodReq = {
+  name: string;
+  startYear: number;
+  startWeek: number;
+  endYear: number;
+  endWeek: number;
+  color: string;
+};
+
+export async function createPeriod(
+  calendarId: string,
+  req: CreatePeriodReq,
+  accessToken: string
+) {
+  const url = `/api/v1/calendar/${calendarId}/period/create`;
+  const resp = await POST({ url, params: req, accessToken });
+  if (!resp.ok) {
+    throw new Error(`fail to call api ${url}`);
+  }
+}

@@ -1,8 +1,26 @@
+import useCreatePeriod from "@/src/hook/useCreatePeriod";
+
 export default function CalendarMatrix({ calendar }: { calendar: Calendar }) {
+  const { selectWeek } = useCreatePeriod(calendar.id);
+
+  function handleClickWeek(week: Week) {
+    selectWeek(week.yearnum, week.weeknum);
+  }
+
   return (
     <div className="flex flex-col items-center">
       <WeekNumberRow />
-      <Years years={calendar.years} />
+
+      <div className="flex flex-col gap-0.5">
+        {calendar.years.map((year) => (
+          <Row>
+            <RowFirst num={year.yearnum} />
+            {year.weeks.map((week) => (
+              <Week key={week.weeknum} week={week} onClick={handleClickWeek} />
+            ))}
+          </Row>
+        ))}
+      </div>
     </div>
   );
 }
@@ -23,28 +41,13 @@ function WeekNumberRow() {
   );
 }
 
-function Years({ years }: { years: Year[] }) {
-  return (
-    <div className="flex flex-col gap-0.5">
-      {years.map((year) => (
-        <YearRow year={year} key={year.yearnum} />
-      ))}
-    </div>
-  );
-}
-
-function YearRow({ year }: { year: Year }) {
-  return (
-    <Row>
-      <RowFirst num={year.yearnum} />
-      {year.weeks.map((week) => (
-        <Week week={week} key={week.weeknum} />
-      ))}
-    </Row>
-  );
-}
-
-function Week({ week }: { week: Week }) {
+function Week({
+  week,
+  onClick,
+}: {
+  week: Week;
+  onClick: (week: Week) => void;
+}) {
   function getColor(timeType: TimeType): string {
     switch (timeType) {
       case "past":
@@ -58,7 +61,12 @@ function Week({ week }: { week: Week }) {
     }
   }
 
-  return <div className={`w-5 h-5 rounded-sm ${getColor(week.timeType)}`} />;
+  return (
+    <div
+      className={`w-5 h-5 rounded-sm ${getColor(week.timeType)}`}
+      onClick={() => onClick(week)}
+    />
+  );
 }
 
 function Row({ children }: { children: React.ReactNode }) {
